@@ -17,12 +17,12 @@ class HalamanDepan:
 
         self.button_login = QPushButton("LOG IN", self.window)
         self.button_login.move(100, 260)
-        self.button_login.setStyleSheet("background-color: grey")
+        self.button_login.setStyleSheet("background-color: lightblue")
 
 
         self.button_signup = QPushButton("SIGN UP", self.window)
         self.button_signup.move(260, 260)
-        self.button_signup.setStyleSheet("background-color: grey")
+        self.button_signup.setStyleSheet("background-color: lightblue")
 
         self.button_login.clicked.connect(self.Login)
         self.button_signup.clicked.connect(self.Sign_Up)
@@ -72,6 +72,7 @@ class MenuLogin:
         self.button_batal.move(295, 340)
         self.button_kembali = QPushButton("Kembali", self.window)
         self.button_kembali.move(15, 390)
+        self.button_kembali.setStyleSheet("background-color: pink")
 
         self.button_masuk.clicked.connect(self.login)
         self.button_kembali.clicked.connect(self.kembali_menu_utama)
@@ -160,6 +161,7 @@ class MenuSignUp:
         self.button_batal.move(295, 340)
         self.button_kembali = QPushButton("Kembali", self.window)
         self.button_kembali.move(15, 390)
+        self.button_kembali.setStyleSheet("background-color: pink")
 
 
         self.button_daftar.clicked.connect(self.signup)
@@ -228,9 +230,10 @@ class Menu:
         self.label_judul.adjustSize()
         self.button_TOP_UP = QPushButton("TOP UP ", self.window)
         self.button_TOP_UP.move(180, 100)
-        self.button_TOP_UP.setStyleSheet("background-color: grey")
+        self.button_TOP_UP.setStyleSheet("background-color: lightblue")
         self.button_kembali = QPushButton("Kembali", self.window)
         self.button_kembali.move(15, 200)
+        self.button_kembali.setStyleSheet("background-color: pink")
         self.button_Keluar = QPushButton("Keluar", self.window)
         self.button_Keluar.move(340, 200)
 
@@ -291,6 +294,7 @@ class TopUp:
 
         self.button_ok = QPushButton("OK", self.window)
         self.button_kembali = QPushButton("Kembali", self.window)
+        self.button_kembali.setStyleSheet("background-color: pink")
 
         self.button_ok.clicked.connect(self.transfer)
         self.button_kembali.clicked.connect(self.menu)
@@ -339,6 +343,7 @@ class BerhasilTopup:
         self.label_judul.adjustSize()
 
         self.button_kembali = QPushButton("Kembali", self.window)
+        self.button_kembali.setStyleSheet("background-color: pink")
         self.button_kembali.setFixedSize(100, 30)
         self.button_kembali.move(20, 400)
         self.button_kembali.clicked.connect(self.menu)
