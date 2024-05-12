@@ -1,0 +1,361 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QFont
+import sys
+
+class HalamanDepan:
+    def __init__(self):
+        self.app = QApplication([])
+        self.window = QMainWindow()
+        self.window.setFixedSize(450, 450)
+        self.window.setWindowTitle("PAY JOY")
+        self.label_judul = QLabel("PAYJOY", self.window)
+        self.label_judul.move(160, 130)
+        self.font_judul = QFont("Times New Roman", 25)
+        self.font_judul.setBold(True)
+        self.label_judul.setFont(self.font_judul)
+        self.label_judul.adjustSize()
+
+        self.button_login = QPushButton("LOG IN", self.window)
+        self.button_login.move(100, 260)
+        self.button_login.setStyleSheet("background-color: lightblue")
+
+
+        self.button_signup = QPushButton("SIGN UP", self.window)
+        self.button_signup.move(260, 260)
+        self.button_signup.setStyleSheet("background-color: lightblue")
+
+        self.button_login.clicked.connect(self.Login)
+        self.button_signup.clicked.connect(self.Sign_Up)
+
+        self.window.show()
+        self.app.exec()
+
+    def Login(self):
+        self.window.hide()
+        self.menu_login = MenuLogin()
+
+    def Sign_Up(self):
+        self.window.hide()
+        self.menu_signup = MenuSignUp()
+
+class MenuLogin:
+    def __init__(self):
+        self.app = QApplication([])
+        self.window = QMainWindow()
+        self.window.setWindowTitle("PAYJOY")
+        self.window.setFixedSize(450, 450)
+        self.label_judul = QLabel("LOGIN", self.window)
+        self.label_judul.move(190, 15)
+        self.font_judul = QFont("Times New Roman", 15)
+        self.font_judul.setBold(True)
+        self.label_judul.setFont(self.font_judul)
+        self.label_judul.adjustSize()
+        self.label_notelp = QLabel("\n\nNo.Telepon", self.window)
+        self.label_notelp.move(20, 50)
+        self.label_notelp.adjustSize()
+        self.ln_notelp = QLineEdit(self.window)
+        self.ln_notelp.move(120, 85)
+        self.ln_notelp.adjustSize()
+        self.ln_notelp.setPlaceholderText("Masukkan No.Telepon")
+        self.ln_notelp.setToolTip("No.Telepon")
+        self.label_password = QLabel("Password", self.window)
+        self.label_password.move(20, 170)
+        self.ln_password = QLineEdit(self.window)
+        self.ln_password.move(120, 170)
+        self.ln_password.setEchoMode(QLineEdit.Password)
+        self.ln_password.adjustSize()
+        self.ln_password.setPlaceholderText("Masukkan Password")
+        self.ln_password.setToolTip("Password")
+        self.button_masuk = QPushButton("Masuk", self.window)
+        self.button_masuk.move(295, 300)
+        self.button_batal = QPushButton("Batal", self.window)
+        self.button_batal.move(295, 340)
+        self.button_kembali = QPushButton("Kembali", self.window)
+        self.button_kembali.move(15, 390)
+        self.button_kembali.setStyleSheet("background-color: pink")
+
+        self.button_masuk.clicked.connect(self.login)
+        self.button_kembali.clicked.connect(self.kembali_menu_utama)
+        self.button_batal.clicked.connect(self.batal)
+
+        self.window.show()
+        self.app.exec()
+
+    def login(self):
+        notelp = self.ln_notelp.text()
+        password = self.ln_password.text()
+        file = open("data.txt", "r")
+        file_data = file.read().split("\n")
+        for i in range(len(file_data)):
+            if file_data[i] != f"{notelp},{password}":
+                if i == len(file_data) - 1:
+                    self.login_gagal()
+                    break
+        else:
+            self.login_berhasil()
+        return
+        file.close()
+
+    def login_gagal(self):
+        pemberitahuan = QMessageBox(self.window)
+        pemberitahuan.setIcon(QMessageBox.Information)
+        pemberitahuan.setText("Username Atau Password Salah!")
+        pemberitahuan.setInformativeText("Sign Up Terlebih Dahulu")
+        pemberitahuan.setWindowTitle("ERROR")
+        pemberitahuan.setStandardButtons(QMessageBox.Ok)
+        pemberitahuan.show()
+        self.ln_notelp.clear()
+        self.ln_password.clear()
+
+    def login_berhasil(self):
+        self.window.close()
+        self.menu = Menu()
+
+    def kembali_menu_utama(self):
+        self.window.hide()
+        self.halaman_depan = HalamanDepan()
+
+    def batal(self):
+        self.window.hide()
+        self.halaman_depan = HalamanDepan()
+
+class MenuSignUp:
+    def __init__(self):
+        self.app = QApplication([])
+        self.window = QMainWindow()
+        self.window.setWindowTitle("PAYJOY")
+        self.window.setFixedSize(450, 450)
+        self.label_judul = QLabel("SIGN UP", self.window)
+        self.label_judul.move(200, 15)
+        self.font_judul = QFont("Times New Roman", 15)
+        self.font_judul.setBold(True)
+        self.label_judul.setFont(self.font_judul)
+        self.label_judul.adjustSize()
+        self.label_notelp = QLabel("\n\nNo.Telepon", self.window)
+        self.label_notelp.move(20, 50)
+        self.label_notelp.adjustSize()
+        self.ln_notelp = QLineEdit(self.window)
+        self.ln_notelp.move(185, 85)
+        self.ln_notelp.adjustSize()
+        self.ln_notelp.setPlaceholderText("Masukkan No.Telepon")
+        self.ln_notelp.setToolTip("No.Telepon")
+        self.label_password = QLabel("Password", self.window)
+        self.label_password.move(20, 170)
+        self.label_password.adjustSize()
+        self.ln_password = QLineEdit(self.window)
+        self.ln_password.move(185, 170)
+        self.ln_password.adjustSize()
+        self.ln_password.setPlaceholderText("Masukkan Password")
+        self.ln_password.setToolTip("Password")
+        self.label_konfirm = QLabel("Konfirmasi Password", self.window)
+        self.label_konfirm.move(20, 250)
+        self.label_konfirm.adjustSize()
+        self.ln_konfirm = QLineEdit(self.window)
+        self.ln_konfirm.move(185, 245)
+        self.ln_konfirm.adjustSize()
+        self.ln_konfirm.setPlaceholderText("Masukkan Password")
+        self.ln_konfirm.setToolTip("Password")
+        self.button_daftar = QPushButton("Daftar", self.window)
+        self.button_daftar.move(295, 300)
+        self.button_batal = QPushButton("Batal", self.window)
+        self.button_batal.move(295, 340)
+        self.button_kembali = QPushButton("Kembali", self.window)
+        self.button_kembali.move(15, 390)
+        self.button_kembali.setStyleSheet("background-color: pink")
+
+
+        self.button_daftar.clicked.connect(self.signup)
+        self.button_kembali.clicked.connect(self.kembali_menu_utama)
+        self.button_batal.clicked.connect(self.batal)
+
+        self.window.show()
+        self.app.exec()
+
+    def sukses_daftar(self):
+        msg_box = QMessageBox(self.window)
+        msg_box.setWindowTitle("INFORMASI")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText("Berhasil Mendaftar Akun")
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.show()
+        tombol_ok = msg_box.exec()
+        if tombol_ok == QMessageBox.Ok:
+            self.menu_login = MenuLogin()
+            self.window.close()
+
+    def signup(self):
+        notelp = self.ln_notelp.text()
+        password = self.ln_password.text()
+        konfirm = self.ln_konfirm.text()
+        if notelp.isdigit() == False:
+            msg_box = QMessageBox(self.window)
+            msg_box.setWindowTitle("INFORMASI")
+            msg_box.setIcon(QMessageBox.Critical)
+            msg_box.setText("Angka")
+            msg_box.setInformativeText("Harap Masukkan Nomor Telepon yang Benar")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.show()
+            self.ln_notelp.clear()
+        if password != konfirm:
+            msg_box = QMessageBox(self.window)
+            msg_box.setWindowTitle("INFORMASI")
+            msg_box.setIcon(QMessageBox.Critical)
+            msg_box.setText("Password dan Konfirmasi Password Harus Sama")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.show()
+        if notelp.isdigit() == True and password == konfirm:
+            file = open("data.txt", "a")
+            file.write("\n" + notelp + "," + password)
+            self.sukses_daftar()
+
+    def kembali_menu_utama(self):
+        self.window.hide()
+        self.halaman_depan = HalamanDepan()
+
+    def batal(self):
+        self.window.hide()
+        self.halaman_depan = HalamanDepan()
+
+class Menu:
+    def __init__(self):
+        self.app = QApplication([])
+        self.window = QMainWindow()
+        self.window.setWindowTitle("PAYJOY")
+        self.window.setFixedSize(450, 250)
+        self.label_judul = QLabel("MENU", self.window)
+        self.label_judul.move(200, 15)
+        self.font_judul = QFont("Times New Roman", 15)
+        self.font_judul.setBold(True)
+        self.label_judul.setFont(self.font_judul)
+        self.label_judul.adjustSize()
+        self.button_TOP_UP = QPushButton("TOP UP ", self.window)
+        self.button_TOP_UP.move(180, 100)
+        self.button_TOP_UP.setStyleSheet("background-color: lightblue")
+        self.button_kembali = QPushButton("Kembali", self.window)
+        self.button_kembali.move(15, 200)
+        self.button_kembali.setStyleSheet("background-color: pink")
+        self.button_Keluar = QPushButton("Keluar", self.window)
+        self.button_Keluar.move(340, 200)
+
+        self.button_TOP_UP.clicked.connect(self.TOP_UP)
+        self.button_kembali.clicked.connect(self.kembali)
+        self.button_Keluar.clicked.connect(self.keluar)
+
+        self.window.show()
+        self.app.exec()
+
+    def TOP_UP(self):
+        self.window.hide()
+        self.TOP_UP = TopUp()
+
+    def kembali(self):
+        self.window.hide()
+        self.halaman_depan = HalamanDepan()
+
+    def keluar(self):
+        sys.exit()
+
+class TopUp:
+    def __init__(self):
+        self.app = QApplication([])
+        self.window = QMainWindow()
+        self.window.setWindowTitle("PAYJOY")
+        self.window.setFixedSize(450, 350)
+        self.label_judul = QLabel("TOP UP", self.window)
+        self.label_judul.move(190, 15)
+        self.font_judul = QFont("Times New Roman", 15)
+        self.font_judul.setBold(True)
+        self.label_judul.setFont(self.font_judul)
+        self.label_judul.adjustSize()
+
+        self.label_No = QLabel("\n\nNo Telepon :", self.window)
+        self.label_No.adjustSize()
+        self.ln_No = QLineEdit(self.window)
+        self.ln_No.adjustSize()
+        self.ln_No.setPlaceholderText("No Telepon")
+        self.ln_No.setToolTip("Nomor Telepon")
+
+        self.label_Jumblah = QLabel("Jumblah :", self.window)
+        self.label_Jumblah.adjustSize()
+        self.ln_Jumblah = QLineEdit(self.window)
+        self.ln_Jumblah.adjustSize()
+        self.ln_Jumblah.setPlaceholderText("Masukkan Jumblah")
+        self.ln_Jumblah.setToolTip("Jumblah")
+
+
+
+        self.label_Pesan = QLabel("Pesan :", self.window)
+        self.label_Pesan.adjustSize()
+        self.ln_Pesan = QLineEdit(self.window)
+        self.ln_Pesan.adjustSize()
+        self.ln_Pesan.setPlaceholderText("Pesan")
+        self.ln_Pesan.setToolTip("Pesan")
+
+
+        self.button_ok = QPushButton("OK", self.window)
+        self.button_kembali = QPushButton("Kembali", self.window)
+        self.button_kembali.setStyleSheet("background-color: pink")
+
+        self.button_ok.clicked.connect(self.transfer)
+        self.button_kembali.clicked.connect(self.menu)
+
+        self.layout = QFormLayout()
+        self.layout.addWidget(self.label_No)
+        self.layout.addWidget(self.ln_No)
+
+        self.layout.addWidget(self.label_Jumblah)
+        self.layout.addWidget(self.ln_Jumblah)
+
+        self.layout.addWidget(self.label_Pesan)
+        self.layout.addWidget(self.ln_Pesan)
+
+        self.layout_container = QVBoxLayout()
+        self.layout_container.addLayout(self.layout)
+        self.layout_container.addWidget(self.button_ok)
+        self.layout_container.addWidget(self.button_kembali)
+
+        self.widget = QWidget()
+        self.widget.setLayout(self.layout_container)
+        self.window.setCentralWidget(self.widget)
+
+        self.window.show()
+        self.app.exec()
+
+    def transfer(self):
+        self.window.hide()
+        self.berhasil_topup = BerhasilTopup()
+
+    def menu(self):
+        self.window.hide()
+        self.menu = Menu()
+
+class BerhasilTopup:
+    def __init__(self):
+        self.app = QApplication([])
+        self.window = QMainWindow()
+        self.window.setWindowTitle("PAYJOY")
+        self.window.setFixedSize(450, 450)
+        self.label_judul = QLabel("S U K S E S S", self.window)
+        self.label_judul.move(70, 180)
+        self.font_judul = QFont("Times New Roman", 40)
+        self.font_judul.setBold(True)
+        self.label_judul.setFont(self.font_judul)
+        self.label_judul.adjustSize()
+
+        self.button_kembali = QPushButton("Kembali", self.window)
+        self.button_kembali.setStyleSheet("background-color: pink")
+        self.button_kembali.setFixedSize(100, 30)
+        self.button_kembali.move(20, 400)
+        self.button_kembali.clicked.connect(self.menu)
+
+        self.window.show()
+
+    def menu(self):
+        self.window.hide()
+        self.menu = HalamanDepan()
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    halaman_depan = HalamanDepan()
+    sys.exit(app.exec())
